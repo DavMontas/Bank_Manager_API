@@ -14,5 +14,6 @@ namespace Bank.Core.Application.Interfaces.Repositories
         Task<T> AddAsync(T T);
         Task UpdateAsync(T T, int id);
         Task DeleteAsync(T T);
+        Task SaveChanges();
     }
 }

@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace Bank.Core.Application.Dto
 {
-    public class UserDto
+    public class TransactionDto
     {
-        public string Name { get; set; }
+        public string AccountFrom { get; set; }
+        public string AccountTo { get; set;}
+        public double Amount { get; set; }
+
+
     }
 }

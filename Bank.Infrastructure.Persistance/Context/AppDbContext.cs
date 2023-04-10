@@ -10,6 +10,8 @@ namespace Bank.Infrastructure.Persistance.Context
 
         public DbSet<User> Users { get; set; }
         public DbSet<BankAccount> BankAccounts { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+
     }
 }
 

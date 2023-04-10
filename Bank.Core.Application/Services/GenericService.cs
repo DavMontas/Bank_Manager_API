@@ -33,7 +33,7 @@ namespace Bank.Core.Application.Services
             return _mapper.Map<TDto>(T);
         }
 
-        public async Task<TDto> AddAsync(TDto dto)
+        public virtual async Task<TDto> AddAsync(TDto dto)
         {
             T T = _mapper.Map<T>(dto);
             T = await _repo.AddAsync(T);
@@ -41,6 +41,11 @@ namespace Bank.Core.Application.Services
         }
 
         public virtual async Task UpdateAsync(TDto dto, int id)
+        {
+            T T = _mapper.Map<T>(dto);
+            await _repo.UpdateAsync(T, id);
+        }
+        public virtual async Task UpdateTAsync(TDto dto, int id)
         {
             T T = _mapper.Map<T>(dto);
             await _repo.UpdateAsync(T, id);

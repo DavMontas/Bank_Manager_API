@@ -50,5 +50,9 @@ namespace Bank.Infrastructure.Persistance.Repository
             await _db.SaveChangesAsync();
 
         }
+        public virtual async Task SaveChanges()
+        {
+            await _db.SaveChangesAsync();
+        }
     }
 }

@@ -81,7 +81,7 @@ namespace Bank_Manager_API.Controllers
             Summary = "BankAccount",
             Description = "Add a BankAccount"
             )]
-        public virtual async Task<IActionResult> Add(BankAccountDto dto)
+        public virtual async Task<IActionResult> Add(BankAccountCreateDto dto)
         {
             try
             {
@@ -90,7 +90,43 @@ namespace Bank_Manager_API.Controllers
                     return BadRequest("Todos los campos son obligatorios.");
                 }
 
-                var enity = await _svc.AddAsync(dto);
+                BankAccountDto bankAccountDto = new();
+                bankAccountDto.Amount = dto.Amount;
+                var enity = await _svc.AddAsync(bankAccountDto);
+
+                if (enity == null)
+                {
+                    return BadRequest("Ha ocurrido un problema.");
+                }
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+            }
+
+        }
+
+        [HttpPost("Send Money :D")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(
+            Summary = "Transacctions",
+            Description = "Make a TransactionDto"
+            )]
+        public virtual async Task<IActionResult> Transacction(TransactionDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Todos los campos son obligatorios.");
+                }
+
+                var enity = await _svc.Transaccion(dto.AccountFrom, dto.AccountTo, dto.Amount);
 
                 if (enity == null)
                 {

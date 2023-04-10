@@ -21,6 +21,7 @@ namespace Bank.Core.Application
 
             service.AddTransient<IBankAccountService, BankAccountService>();
             service.AddTransient<IUserService, UserService>();
+            service.AddTransient<ITransactionService, TransactionService>();
 
             #endregion
         }

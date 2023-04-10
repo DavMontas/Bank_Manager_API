@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bank.Core.Application.Interfaces.Repositories
 {
-    public interface IBankAccountRepository : IGenericRepository<BankAccount>
+    public interface ITransactionRepository : IGenericRepository<Transaction>
     {
-        Task<BankAccount> GetByAccountNumberAsync(string accountNumber);
-
     }
 }

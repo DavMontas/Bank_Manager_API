@@ -25,6 +25,8 @@ namespace Bank.Infrastructure.Persistance
             svc.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             svc.AddTransient<IBankAccountRepository, BankAccountRepository>();
             svc.AddTransient<IUserRepository, UserRepository>();
+            svc.AddTransient<ITransactionRepository, TransactionRepository>();
+
 
             #endregion
         }
