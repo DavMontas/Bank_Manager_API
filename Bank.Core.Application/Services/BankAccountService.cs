@@ -40,6 +40,18 @@ namespace Bank.Core.Application.Services
             
         }
 
+        public async Task DeleteAsync(string accountNumber)
+        {
+            BankAccount e = await _repo.GetByAccountNumberAsync(accountNumber);
+            await _repo.DeleteAsync(e);
+        }
+
+        public async Task<BankAccountDto> GetByAccountNumberAsync(string accountNumber)
+        {
+            BankAccount bankAccount = await _repo.GetByAccountNumberAsync(accountNumber);
+            return _mapper.Map<BankAccountDto>(bankAccount);
+        }
+
         public async Task<BankAccountDto> Transaccion(string AccountFrom, string AccountTo, double Amount)
         {
             var listAccounts = await base.GetAllAsync();
@@ -80,7 +92,6 @@ namespace Bank.Core.Application.Services
                 return false;
             }
             return true;
-
 
         }
     }

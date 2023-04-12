@@ -11,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddPersistanceInfrastructure(builder.Configuration);
 builder.Services.AddApplicationLayer();
 
+builder.Services.AddCors(options => options.AddPolicy("ApiCorsPolicy",
+             builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
+
 builder.Services.AddControllers(opt =>
 {
     opt.Filters.Add(new ProducesAttribute("application/json"));
@@ -45,6 +49,7 @@ else
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+app.UseCors("ApiCorsPolicy");
 
 app.UseHttpsRedirection();
 

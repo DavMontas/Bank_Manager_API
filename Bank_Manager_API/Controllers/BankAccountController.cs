@@ -73,6 +73,38 @@ namespace Bank_Manager_API.Controllers
             }
         }
 
+        [HttpGet("GetByAccountNumber/{accountNumber}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(
+            Summary = "Get BankAccount",
+            Description = "Get a BankAccount by its accountNumber"
+            )]
+        public virtual async Task<IActionResult> GetByAccountNumber(string accountNumber)
+        {
+            try
+            {
+                if (accountNumber == null)
+                {
+                    return BadRequest();
+                }
+
+                var entity = await _svc.GetByAccountNumberAsync(accountNumber);
+
+                if (entity == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(entity);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpPost("add")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -109,7 +141,7 @@ namespace Bank_Manager_API.Controllers
 
         }
 
-        [HttpPost("Send Money :D")]
+        [HttpPost("Transaction")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -183,30 +215,30 @@ namespace Bank_Manager_API.Controllers
             }
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("delete/{accountNumber}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [SwaggerOperation(
             Summary = "Delete",
-            Description = "Delete a BankAccount by its id"
+            Description = "Delete a BankAccount by its accountNumber"
             )]
-        public virtual async Task<IActionResult> delete(int id)
+        public virtual async Task<IActionResult> delete(string accountNumber)
         {
             try
             {
-                if (id == 0)
+                if (accountNumber == null)
                 {
                     return BadRequest();
                 }
 
-                var entity = await _svc.GetByIdAsync(id);
+                var entity = await _svc.GetByAccountNumberAsync(accountNumber);
 
                 if (entity == null)
                 {
                     return NotFound();
                 }
 
-                await _svc.DeleteAsync(id);
+                await _svc.DeleteAsync(accountNumber);
 
                 return NoContent();
             }

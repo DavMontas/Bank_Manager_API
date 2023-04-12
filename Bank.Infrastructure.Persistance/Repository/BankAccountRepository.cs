@@ -21,7 +21,7 @@ namespace Bank.Infrastructure.Persistance.Repository
         public async Task<BankAccount> GetByAccountNumberAsync(string accountNumber)
         {
             var list = await this.GetAllAsync();
-            BankAccount entity = (BankAccount)list.Where(e => e.AccountNumber == accountNumber);
+            BankAccount entity = list.FirstOrDefault(e => e.AccountNumber == accountNumber); /*await _db.BankAccounts.FindAsync(accountNumber);*/
             return entity;
         }
     }
