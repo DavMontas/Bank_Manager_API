@@ -113,7 +113,7 @@ namespace Bank_Manager_API.Controllers
             Summary = "BankAccount",
             Description = "Add a BankAccount"
             )]
-        public virtual async Task<IActionResult> Add(BankAccountCreateDto dto)
+        public virtual async Task<IActionResult> Add([FromBody] double amount)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace Bank_Manager_API.Controllers
                 }
 
                 BankAccountDto bankAccountDto = new();
-                bankAccountDto.Amount = dto.Amount;
+                bankAccountDto.Amount = amount;
                 var enity = await _svc.AddAsync(bankAccountDto);
 
                 if (enity == null)
@@ -149,7 +149,7 @@ namespace Bank_Manager_API.Controllers
             Summary = "Transacctions",
             Description = "Make a TransactionDto"
             )]
-        public virtual async Task<IActionResult> Transacction(TransactionDto dto)
+        public virtual async Task<IActionResult> Transacction([FromBody] TransactionDto dto)
         {
             try
             {

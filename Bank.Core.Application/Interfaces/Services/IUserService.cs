@@ -5,5 +5,6 @@ namespace Bank.Core.Application.Interfaces.Services
 {
     public interface IUserService : IGenericService<UserDto, User>
     {
+        //Task<UserDto> Register(UserDto user);
     }
 }
