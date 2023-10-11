@@ -8,10 +8,9 @@ namespace Bank.Core.Application.Dto
 {
     public class TransactionDto
     {
-        public string AccountFrom { get; set; }
-        public string AccountTo { get; set;}
+        public int Id { get; set; }
+        public string AccountFrom { get; set; } = default!;
+        public string AccountTo { get; set; } = default!;
         public double Amount { get; set; }
-
-
     }
 }

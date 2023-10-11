@@ -4,12 +4,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using Bank_Manager_API.Extension;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#pragma warning disable CS0618 
+builder.Services.AddControllers().AddFluentValidation();
+#pragma warning restore CS0618 
 
 builder.Services.AddPersistanceInfrastructure(builder.Configuration);
 builder.Services.AddApplicationLayer();
+builder.Services.AddSignalR();
+
 
 builder.Services.AddCors(options => options.AddPolicy("ApiCorsPolicy",
              builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));

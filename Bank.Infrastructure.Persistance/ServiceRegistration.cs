@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +20,8 @@ namespace Bank.Infrastructure.Persistance
             svc.AddDbContext<AppDbContext>(options =>
                     options.UseSqlServer(config.GetConnectionString("DefaultConnection"),
                     m => m.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
+
+            svc.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             #region 'repos'
 

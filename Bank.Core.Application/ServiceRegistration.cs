@@ -1,6 +1,7 @@
 ﻿using Bank.Core.Application.Interfaces.Repositories;
 using Bank.Core.Application.Interfaces.Services;
 using Bank.Core.Application.Services;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,12 @@ namespace Bank.Core.Application
         {
             service.AddAutoMapper(Assembly.GetExecutingAssembly());
 
+
+            service.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
             #region services
 
             service.AddTransient<IBankAccountService, BankAccountService>();
-            service.AddTransient<IUserService, UserService>();
             service.AddTransient<ITransactionService, TransactionService>();
 
             #endregion

@@ -9,9 +9,8 @@ namespace Bank.Core.Application.Dto
 {
     public class BankAccountDto
     {
-        [JsonIgnore]
         public int Id { get; set; }
-        public string AccountNumber { get; set; }
+        public string AccountNumber { get; set; } = default!;
         public double Amount { get; set; }
     }
 }

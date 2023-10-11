@@ -1,5 +1,6 @@
 ﻿using Bank.Core.Application.Dto;
 using Bank.Core.Application.Interfaces.Services;
+using Bank.Core.Application.Request;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -113,7 +114,7 @@ namespace Bank_Manager_API.Controllers
             Summary = "BankAccount",
             Description = "Add a BankAccount"
             )]
-        public virtual async Task<IActionResult> Add([FromBody] double amount)
+        public virtual async Task<IActionResult> Add([FromQuery] double amount)
         {
             try
             {
@@ -122,9 +123,9 @@ namespace Bank_Manager_API.Controllers
                     return BadRequest("Todos los campos son obligatorios.");
                 }
 
-                BankAccountDto bankAccountDto = new();
-                bankAccountDto.Amount = amount;
-                var enity = await _svc.AddAsync(bankAccountDto);
+                CreateBankAccountRequest request = new();
+                request.Amount = amount;
+                var enity = await _svc.AddAsync(request);
 
                 if (enity == null)
                 {
@@ -147,18 +148,13 @@ namespace Bank_Manager_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [SwaggerOperation(
             Summary = "Transacctions",
-            Description = "Make a TransactionDto"
+            Description = "Make a Transaction"
             )]
-        public virtual async Task<IActionResult> Transacction([FromBody] TransactionDto dto)
+        public virtual async Task<IActionResult> Transacction([FromBody] CreateTransactionRequest request)
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest("Todos los campos son obligatorios.");
-                }
-
-                var enity = await _svc.Transaccion(dto.AccountFrom, dto.AccountTo, dto.Amount);
+                var enity = await _svc.Transaccion(request);
 
                 if (enity == null)
                 {
@@ -184,11 +180,11 @@ namespace Bank_Manager_API.Controllers
             Summary = "Update",
             Description = "To update a BankAccount"
             )]
-        public virtual async Task<IActionResult> Update(BankAccountDto dto, int id)
+        public virtual async Task<IActionResult> Update(UpdateBankAccountRequest request, int id)
         {
             try
             {
-                if (id == 0 || dto == null)
+                if (id == 0 || request == null)
                 {
                     return BadRequest();
                 }
@@ -205,7 +201,7 @@ namespace Bank_Manager_API.Controllers
                     return BadRequest("Todos los campos son obligatorios.");
                 }
 
-                await _svc.UpdateAsync(dto, id);
+                await _svc.UpdateAsync(request, id);
 
                 return Ok(entity);
             }

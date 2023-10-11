@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 
 namespace Bank.Core.Application.Services
 {
-    public class GenericService<TDto, T> : IGenericService<TDto, T>
+    public class GenericService<CreateRequest, UpdateRequest, TDto, T> : IGenericService<CreateRequest, UpdateRequest, TDto, T>
+        where CreateRequest : class
+        where UpdateRequest : class
         where TDto : class
         where T : class
     {
@@ -33,21 +35,16 @@ namespace Bank.Core.Application.Services
             return _mapper.Map<TDto>(T);
         }
 
-        public virtual async Task<TDto> AddAsync(TDto dto)
+        public virtual async Task<TDto> AddAsync(CreateRequest request)
         {
-            T T = _mapper.Map<T>(dto);
+            T T = _mapper.Map<T>(request);
             T = await _repo.AddAsync(T);
             return _mapper.Map<TDto>(T);
         }
 
-        public virtual async Task UpdateAsync(TDto dto, int id)
+        public virtual async Task UpdateAsync(UpdateRequest request, int id)
         {
-            T T = _mapper.Map<T>(dto);
-            await _repo.UpdateAsync(T, id);
-        }
-        public virtual async Task UpdateTAsync(TDto dto, int id)
-        {
-            T T = _mapper.Map<T>(dto);
+            T T = _mapper.Map<T>(request);
             await _repo.UpdateAsync(T, id);
         }
 
@@ -56,6 +53,5 @@ namespace Bank.Core.Application.Services
             T T = await _repo.GetByIdAsync(id);
             await _repo.DeleteAsync(T);
         }
-
     }
 }
