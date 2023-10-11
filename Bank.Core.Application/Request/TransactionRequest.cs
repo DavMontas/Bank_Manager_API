@@ -8,8 +8,8 @@ namespace Bank.Core.Application.Request;
 
 public class CreateTransactionRequest
 {
-    public string AccountFrom { get; set; }
-    public string AccountTo { get; set; }
+    public string AccountFrom { get; set; } = default!;
+    public string AccountTo { get; set; } = default!;
     public double Amount { get; set; }
 }
 

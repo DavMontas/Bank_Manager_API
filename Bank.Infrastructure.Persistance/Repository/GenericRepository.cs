@@ -28,7 +28,7 @@ namespace Bank.Infrastructure.Persistance.Repository
 
             return await query.ToListAsync();
         }
-        public virtual async Task<T> GetByIdAsync(int id)
+        public virtual async Task<T?> GetByIdAsync(int id)
         {
             return await _db.Set<T>().FindAsync(id);
         }
@@ -38,10 +38,10 @@ namespace Bank.Infrastructure.Persistance.Repository
             await _db.SaveChangesAsync();
             return T;
         }
-        public virtual async Task UpdateAsync(T T, int id)
+        public virtual async Task UpdateAsync(T? T, int id)
         {
-            T entry = await _db.Set<T>().FindAsync(id);
-            _db.Entry(entry).CurrentValues.SetValues(T);
+            T? entry = await _db.Set<T>().FindAsync(id);
+            _db.Entry(entry!).CurrentValues.SetValues(T!);
             await _db.SaveChangesAsync();
         }
         public virtual async Task DeleteAsync(T T)

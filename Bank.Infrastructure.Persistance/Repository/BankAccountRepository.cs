@@ -18,11 +18,10 @@ namespace Bank.Infrastructure.Persistance.Repository
             _db = db;
         }
 
-        public async Task<BankAccount> GetByAccountNumberAsync(string accountNumber)
+        public async Task<BankAccount?> GetByAccountNumberAsync(string accountNumber)
         {
             var list = await this.GetAllAsync();
-            BankAccount entity = list.FirstOrDefault(e => e.AccountNumber == accountNumber); /*await _db.BankAccounts.FindAsync(accountNumber);*/
-            return entity;
+            return list.FirstOrDefault(e => e.AccountNumber == accountNumber); /*await _db.BankAccounts.FindAsync(accountNumber);*/
         }
     }
 }

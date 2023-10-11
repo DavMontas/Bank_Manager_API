@@ -9,7 +9,7 @@ namespace Bank.Core.Application.Interfaces.Repositories
 {
     public interface IBankAccountRepository : IGenericRepository<BankAccount>
     {
-        Task<BankAccount> GetByAccountNumberAsync(string accountNumber);
+        Task<BankAccount?> GetByAccountNumberAsync(string accountNumber);
 
     }
 }
